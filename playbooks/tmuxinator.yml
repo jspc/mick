@@ -1,0 +1,5 @@
+---
+- hosts: all
+  tasks:
+    - name: install tmuxinator
+      gem: name=tmuxinator version=0.6.10

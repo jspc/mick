@@ -1,0 +1,13 @@
+---
+- hosts: all
+  tasks:
+  - name: install python docker bindings
+    pip:
+      name: docker-py
+      version: 1.1.0
+  - name: pull emacs container
+    docker:
+      name: emacs
+      image: quay.io/jspc/emacs-24.4
+      state: present
+      pull: always

@@ -1,0 +1,18 @@
+---
+- hosts: all
+  tasks:
+  - name: update box
+    yum: name=* state=latest
+  - name: install tmux
+    yum: name=tmux state=latest
+  - name: install ruby
+    yum: name={{item}} state=latest
+    with_items:
+      - ruby
+      - gem
+  - name: install pip
+    easy_install: name=pip
+  - name: install docker
+    yum: name=docker state=latest
+  - name: restart docker
+    service: name=docker state=restarted

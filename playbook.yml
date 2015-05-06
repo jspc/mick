@@ -1,17 +1,4 @@
 ---
-- hosts: all
-  tasks:
-  - name: update box
-    yum: name=* state=latest
-  - name: install tmux
-    yum: name=tmux state=latest
-  - name: install docker
-    yum: name=docker state=latest
-  - name: pull emacs container
-    docker:
-      name: emacs
-      image: quay.io/jspc/emacs-24.4
-      state: present
-      pull: always
-  - name: install tmuxinator
-    gem: name=tmuxinator version=0.6.10
+- include: playbooks/packages.yml
+- include: playbooks/tmuxinator.yml
+- include: playbooks/docker.yml
