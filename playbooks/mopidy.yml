@@ -1,0 +1,15 @@
+---
+- hosts: all
+  tasks:
+    - name: install build tools
+      yum: name='@Development Tools' state=present
+    - name: install mopidy deps
+      yum: name={{item}} state=latest
+      with_items:
+        - gstreamer-python
+        - gstreamer-plugins-good
+        - gstreamer-tools
+    - name: install mopidy
+      pip: name=mopidy
+    - name: uninstall build tools
+      yum: name='@Development Tools' state=absent

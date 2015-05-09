@@ -2,4 +2,14 @@
 - hosts: all
   tasks:
     - name: install tmuxinator
-      gem: name=tmuxinator version=0.6.10
+      gem: name=tmuxinator version=0.6.10 user_install=no
+    - name: mkdir tmuxinator config
+      file:
+        path: /home/vagrant/.tmuxinator
+        state: directory
+        owner: vagrant
+    - name: copy tmuxinator config
+      copy:
+        src: ../files/tmux.yml
+        dest: /home/vagrant/.tmuxinator/tmux.yml
+        owner: vagrant

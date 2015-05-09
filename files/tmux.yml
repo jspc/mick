@@ -1,0 +1,10 @@
+name: tmux
+root: ~
+
+windows:
+  - emacs: sudo docker run -ti -v /projects:/projects -v $(dirname ${SSH_AUTH_SOCK}):$(dirname ${SSH_AUTH_SOCK}) -e SSH_AUTH_SOCK=${SSH_AUTH_SOCK} quay.io/jspc/emacs-24.4
+  - music:
+      layout: main-horizontal
+      panes:
+        - mopidy
+        - ncmpcpp

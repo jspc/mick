@@ -2,3 +2,5 @@
 - include: playbooks/packages.yml
 - include: playbooks/tmuxinator.yml
 - include: playbooks/docker.yml
+- include: playbooks/mopidy.yml
+- include: playbooks/ncmpcpp.yml

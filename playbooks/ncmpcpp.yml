@@ -1,0 +1,53 @@
+---
+- hosts: all
+  tasks:
+    - name: create build dir
+      file:
+        path: /usr/local/src
+        state: directory
+    - name: install build tools
+      yum: name='@Development Tools' state=present
+    - name: get ncmpcpp source
+      git:
+        repo: git://repo.or.cz/ncmpcpp.git
+        accept_hostkey: true
+        dest: /usr/local/src/ncmpcpp
+        version: 0.6.4
+    - name: get libmpdclient source
+      git:
+        repo: git://git.musicpd.org/master/libmpdclient.git
+        accept_hostkey: true
+        dest: /usr/local/src/libmpdclient
+        version: v2.10
+    - name: install deps
+      yum: name={{item}}
+      with_items:
+        - ncurses-devel
+        - taglib-devel
+        - boost-devel
+    - name: autogen libmpdclient
+      command: ./autogen.sh --prefix=/ --enable-clock --with-taglib
+      args:
+        chdir: /usr/local/src/libmpdclient
+    - name: make libmpdclient
+      command: make
+      args:
+        chdir: /usr/local/src/libmpdclient
+    - name: make install libmpdclient
+      command: make install
+      args:
+        chdir: /usr/local/src/libmpdclient
+    - name: autogen ncmpcpp
+      command: ./autogen.sh --prefix=/usr --enable-clock --with-taglib
+      args:
+        chdir: /usr/local/src/ncmpcpp
+    - name: make ncmpcpp
+      command: make
+      args:
+        chdir: /usr/local/src/ncmpcpp
+    - name: make install ncmpcpp
+      command: make install
+      args:
+        chdir: /usr/local/src/ncmpcpp
+    - name: uninstall build tools
+      yum: name='@Development Tools' state=absent
